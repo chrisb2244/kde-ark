@@ -133,11 +133,10 @@ void Job::onCancelled()
 
 void Job::onError(const QString & message, const QString & details)
 {
-    Q_UNUSED(details)
-
     qCDebug(KERFUFFLE) << "Error emitted:" << message;
     setError(KJob::UserDefinedError);
-    setErrorText(message);
+    QString str(message + QString::fromUtf8("\n") + details);
+    setErrorText(str);
 }
 
 void Job::onEntry(const ArchiveEntry & archiveEntry)

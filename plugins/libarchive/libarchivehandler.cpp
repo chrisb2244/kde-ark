@@ -768,7 +768,14 @@ void LibArchiveInterface::copyData(struct archive *source, struct archive *dest,
         /* int writeBytes = */
         archive_write_data(dest, buff, readBytes);
         if (archive_errno(dest) != ARCHIVE_OK) {
-            qCCritical(KERFUFFLE_PLUGIN) << "Error while extracting..." << archive_error_string(dest) << "(error nb =" << archive_errno(dest) << ')';
+            qCCritical(KERFUFFLE_PLUGIN) << "Error while extracting..."
+                                         << archive_error_string(dest)
+                                         << "(error nb ="
+                                         << archive_errno(dest) << ')';
+            QString errStr(QString::fromLocal8Bit(archive_error_string(dest)));
+            QString errMsg(i18n("Error whilst extracting - %1", errStr));
+            QString errDet(i18n(strerror(archive_errno(dest))));
+            error(errMsg, errDet);
             return;
         }
 
