@@ -156,6 +156,9 @@ Archive::Archive(ReadOnlyArchiveInterface *archiveInterface, QObject *parent)
         m_isPasswordProtected(false),
         m_isSingleFolderArchive(false)
 {
+    // Set kerfuffle debugging on/off
+    QLoggingCategory::setFilterRules(QStringLiteral("ark.kerfuffle.debug = true"));
+
     qCDebug(KERFUFFLE) << "Created archive instance";
 
     Q_ASSERT(archiveInterface);
